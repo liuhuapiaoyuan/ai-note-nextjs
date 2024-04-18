@@ -29,11 +29,13 @@ export const notesIndex = {
     values: number[],
     metadata: Record<string, any>
   }>) {
-    await client.insert({
+    await client.upsert({
       collection_name,
       data: data.map(z => ({
         vector: z.values,
         id: z.id,
+        ...(z.metadata || {})
+
       })),
     });
   },
@@ -56,15 +58,15 @@ export const notesIndex = {
       limit: data.topK,
     };
 
-    // if (data.filter) {
-    //   query.filter = ""
-    //   Object.keys(data.filter).forEach(key => {
-    //     if (data.filter && data.filter[key]) {
-    //       query.filter = query.filter ? `${query.filter} AND ${key}==${data.filter[key]}` : `${key}==${data.filter[key]}`
-    //     }
-    //   })
+    if (data.filter) {
+      query.filter = ""
+      Object.keys(data.filter).forEach(key => {
+        if (data.filter && data.filter[key]) {
+          query.filter = query.filter ? `${query.filter} && ${key}=='${data.filter[key]}'` : `${key}=='${data.filter[key]}'`
+        }
+      })
 
-    // }
+    }
     const res = await client.search(query);
     return {
       matches: res.results
