@@ -9,3 +9,13 @@ The app is built with Next.js 14's app router, TailwindCSS, Shadcn UI, and TypeS
 Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJbEP5GeRA
 
 ![thumbnail](https://github.com/codinginflow/nextjs-ai-note-app/assets/52977034/cefc69f2-a486-4072-bf69-d0738f7336af)
+
+
+
+### 技术栈
+- nextjs
+- next-auth
+- authing [authing](https://www.authing.cn/)
+- pinecone [pinecone](https://www.pinecone.io/)
+- chatgpt [chatgpt](https://www.chatgpt.ai/)
+- vercel-ai-sdk [vercel-ai-sdk](https://vercel.com/docs/vercel-ai/overview)
