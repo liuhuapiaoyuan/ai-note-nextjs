@@ -6,7 +6,7 @@ if (!apiKey) {
   throw Error("OPENAI_API_KEY is not set");
 }
 
-const openai = new OpenAI({ apiKey });
+const openai = new OpenAI({ apiKey, baseURL: process.env.OPENAI_BASE_URL });
 
 export default openai;
 

@@ -37,6 +37,7 @@ export async function POST(req: Request) {
     const systemMessage: ChatCompletionMessage = {
       role: "system",
       content:
+        "You must use language that is appropriate for the user. " +
         "You are an intelligent note-taking app. You answer the user's question based on their existing notes. " +
         "The relevant notes for this query are:\n" +
         relevantNotes
