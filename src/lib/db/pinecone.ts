@@ -10,4 +10,6 @@ const pinecone = new Pinecone({
   apiKey,
 });
 
-export const notesIndex = pinecone.Index("nextjs-ai-note-app");
+//export const notesIndex = pinecone.Index("nextjs-ai-note-app");
+export { notesIndex } from "./zilliz";
+

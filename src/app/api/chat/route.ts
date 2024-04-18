@@ -2,8 +2,23 @@ import { notesIndex } from "@/lib/db/pinecone";
 import prisma from "@/lib/db/prisma";
 import openai, { getEmbedding } from "@/lib/openai";
 import { auth } from "@clerk/nextjs";
-import { StreamingTextResponse } from "ai";
+import {
+  ConsistencyLevelEnum,
+  MilvusClient
+} from "@zilliz/milvus2-sdk-node";
+import { OpenAIStream, StreamingTextResponse } from "ai";
 import { ChatCompletionMessage } from "openai/resources/index.mjs";
+export async function GET(req: Request) {
+  const client = new MilvusClient({
+    address: process.env.ZILLIZ_CLOUD_ADDRESS!,
+    username: "db_f1cf3c92f1a307e",
+    password: "Qg9,Gs{V4K-/5$4Q"
+  });
+  return Response.json({
+    version: await client.getVersion(),
+    message: "Hello, world!", data: ConsistencyLevelEnum
+  });
+}
 
 export async function POST(req: Request) {
   try {
@@ -11,7 +26,6 @@ export async function POST(req: Request) {
     const messages: ChatCompletionMessage[] = body.messages;
 
     const messagesTruncated = messages.slice(-6);
-
     const embedding = await getEmbedding(
       messagesTruncated.map((message) => message.content).join("\n"),
     );
@@ -57,8 +71,8 @@ export async function POST(req: Request) {
     //     contentType: "text/event-stream",
     //   }
     // });
-    //const stream = OpenAIStream(response);
-    return new StreamingTextResponse(response.toReadableStream());
+    const stream = OpenAIStream(response);
+    return new StreamingTextResponse(stream);
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal server error" }, { status: 500 });
