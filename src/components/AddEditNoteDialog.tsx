@@ -137,7 +137,7 @@ export default function AddEditNoteDialog({
                   onClick={deleteNote}
                   type="button"
                 >
-                  Delete note
+                  删除笔记
                 </LoadingButton>
               )}
               <LoadingButton
@@ -145,7 +145,7 @@ export default function AddEditNoteDialog({
                 loading={form.formState.isSubmitting}
                 disabled={deleteInProgress}
               >
-                Submit
+                提交
               </LoadingButton>
             </DialogFooter>
           </form>

@@ -5,14 +5,16 @@ import AIChatButton from "@/components/AIChatButton";
 import AddEditNoteDialog from "@/components/AddEditNoteDialog";
 import ThemeToggleButton from "@/components/ThemeToggleButton";
 import { Button } from "@/components/ui/button";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, User } from "@nextui-org/react";
+
 import { LogOut, Plus } from "lucide-react";
-import { User } from "next-auth";
+import { User as AuthUser } from "next-auth";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function NavBar({ user }: { user?: User }) {
+export default function NavBar({ user }: { user?: AuthUser }) {
 
   const [showAddEditNoteDialog, setShowAddEditNoteDialog] = useState(false);
 
@@ -27,22 +29,50 @@ export default function NavBar({ user }: { user?: User }) {
           <div className="flex items-center gap-2">
             {
               user && <>
-                <img alt={user.name} src={user.image} className="w-10 h-10 rounded-full" />
-                <span>{user.name}</span>
+
+                <Dropdown
+                  onClick={e => {
+
+                  }}
+                  trigger="press"
+                  showArrow
+                  classNames={{
+                    base: "before:bg-default-200", // change arrow background
+                    content: "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",
+                  }} >
+                  <DropdownTrigger className="hover:bg-default-200 cursor-pointer py-1 px-3">
+                    <User
+                      name={user.name}
+                      avatarProps={{ src: user.image!, size: "sm" }}
+                    />
+                  </DropdownTrigger>
+                  <DropdownMenu
+                    onAction={(key) => {
+                      key === 'signOut' && signOut()
+                    }}
+                    aria-label="Static Actions">
+                    <DropdownItem
+                      key="new">
+                      <User
+                        name={user.name}
+                        avatarProps={{ src: user.image!, size: "sm" }}
+                      />
+                    </DropdownItem>
+                    <DropdownItem
+                      startContent={<LogOut size={20} />}
+                      key="signOut" className="text-danger" color="danger">
+                      退出登录
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
               </>
-            }
-            <ThemeToggleButton />
-            {
-              user && <Button onClick={() => signOut()} type="submit" className="bg-red-500 hover:bg-red-800" >
-                <LogOut size={20} className="mr-2" />
-                退出登录
-              </Button>
             }
             <Button onClick={() => setShowAddEditNoteDialog(true)}>
               <Plus size={20} className="mr-2" />
               新增笔记
             </Button>
             <AIChatButton user={user} />
+            <ThemeToggleButton />
           </div>
         </div>
       </div>
@@ -50,7 +80,6 @@ export default function NavBar({ user }: { user?: User }) {
         open={showAddEditNoteDialog}
         setOpen={setShowAddEditNoteDialog}
       />
-
     </>
   );
 }
