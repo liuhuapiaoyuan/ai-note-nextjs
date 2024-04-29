@@ -14,7 +14,7 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 
 - nextjs
 - next-auth
-- authing [authing](https://www.authing.cn/)
+- authing [authing](https://www.authing.cn/) ,casdoor
 - pinecone [pinecone](https://www.pinecone.io/)
 - chatgpt [chatgpt](https://www.chatgpt.ai/)
 - vercel-ai-sdk [vercel-ai-sdk](https://vercel.com/docs/vercel-ai/overview)
@@ -25,3 +25,15 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 - [x] next-ui集成
 - [x] 美化聊天对话记录
 - [x] 美化聊天输入框
+- [ ] 改善笔记列表显示
+- [ ] 改善笔记录入体验，改为新开页面，markdown编辑器，可视化查看
+- [ ] 增加笔记标签字段，并增加AI推荐标签
+- [ ] 增加笔记分类，并增加分类功能
+- [ ] 增加笔记状态，通过redis异步训练文档，并更新状态
+- [ ] 增强文档训练，引入langchain，进行text split chunk , 并训练文档
+
+### 使用Docker进行编译和发布
+
+- Dockerfile的编写
+- docker build, docker tag, docker push
+- docker-compose的编写
