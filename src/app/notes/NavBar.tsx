@@ -5,16 +5,14 @@ import AIChatButton from "@/components/AIChatButton";
 import AddEditNoteDialog from "@/components/AddEditNoteDialog";
 import ThemeToggleButton from "@/components/ThemeToggleButton";
 import { Button } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
-import { Plus } from "lucide-react";
-import { useTheme } from "next-themes";
+import { LogOut, Plus } from "lucide-react";
+import { User } from "next-auth";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function NavBar() {
-  const { theme } = useTheme();
+export default function NavBar({ user }: { user?: User }) {
 
   const [showAddEditNoteDialog, setShowAddEditNoteDialog] = useState(false);
 
@@ -27,19 +25,24 @@ export default function NavBar() {
             <span className="font-bold">FlowBrain</span>
           </Link>
           <div className="flex items-center gap-2">
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                baseTheme: theme === "dark" ? dark : undefined,
-                elements: { avatarBox: { width: "2.5rem", height: "2.5rem" } },
-              }}
-            />
+            {
+              user && <>
+                <img alt={user.name} src={user.image} className="w-10 h-10 rounded-full" />
+                <span>{user.name}</span>
+              </>
+            }
             <ThemeToggleButton />
+            {
+              user && <Button onClick={() => signOut()} type="submit" className="bg-red-500 hover:bg-red-800" >
+                <LogOut size={20} className="mr-2" />
+                退出登录
+              </Button>
+            }
             <Button onClick={() => setShowAddEditNoteDialog(true)}>
               <Plus size={20} className="mr-2" />
-              Add Note
+              新增笔记
             </Button>
-            <AIChatButton />
+            <AIChatButton user={user} />
           </div>
         </div>
       </div>

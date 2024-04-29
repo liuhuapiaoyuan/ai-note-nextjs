@@ -1,7 +1,7 @@
+import { auth } from "@/auth";
 import { notesIndex } from "@/lib/db/pinecone";
 import prisma from "@/lib/db/prisma";
 import openai, { getEmbedding } from "@/lib/openai";
-import { auth } from "@clerk/nextjs";
 import { StreamingTextResponse } from "ai";
 import { ChatCompletionMessage } from "openai/resources/index.mjs";
 
@@ -16,8 +16,8 @@ export async function POST(req: Request) {
       messagesTruncated.map((message) => message.content).join("\n"),
     );
 
-    const { userId } = auth();
-
+    const session = await auth();
+    const userId = session?.user?.id!;
     const vectorQueryResponse = await notesIndex.query({
       vector: embedding,
       topK: 4,

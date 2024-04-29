@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { notesIndex } from "@/lib/db/pinecone";
 import prisma from "@/lib/db/prisma";
 import { getEmbedding } from "@/lib/openai";
@@ -6,7 +7,6 @@ import {
   deleteNoteSchema,
   updateNoteSchema,
 } from "@/lib/validation/note";
-import { auth } from "@clerk/nextjs";
 
 export async function POST(req: Request) {
   try {
@@ -21,8 +21,8 @@ export async function POST(req: Request) {
 
     const { title, content } = parseResult.data;
 
-    const { userId } = auth();
-
+    const session = await auth();
+    const userId = session?.user?.id!;
     if (!userId) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }

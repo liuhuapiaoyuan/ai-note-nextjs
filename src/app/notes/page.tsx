@@ -1,17 +1,19 @@
+import { auth } from "@/auth";
 import Note from "@/components/Note";
 import prisma from "@/lib/db/prisma";
-import { auth } from "@clerk/nextjs";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "FlowBrain - Notes",
 };
 
 export default async function NotesPage() {
-  const { userId } = auth();
-
-  if (!userId) throw Error("userId undefined");
-
+  const session = await auth();
+  if (!session || !session.user) {
+    return redirect("/sign-in")
+  }
+  const userId = session.user?.id
   const allNotes = await prisma.note.findMany({ where: { userId } });
 
   return (

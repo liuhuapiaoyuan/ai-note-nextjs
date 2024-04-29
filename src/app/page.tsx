@@ -1,12 +1,13 @@
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
-import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  const { userId } = auth();
+  const { userId } = {
+    userId: "1234567890",
+  }
 
   if (userId) redirect("/notes");
 

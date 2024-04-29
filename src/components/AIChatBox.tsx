@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { useUser } from "@clerk/nextjs";
 import { Message } from "ai";
 import { useChat } from "ai/react";
 import { Bot, Trash, XCircle } from "lucide-react";
@@ -11,9 +10,13 @@ import { Input } from "./ui/input";
 interface AIChatBoxProps {
   open: boolean;
   onClose: () => void;
+  user: {
+    imageUrl: string
+    nickname: string
+  }
 }
 
-export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
+export default function AIChatBox({ open, onClose, user }: AIChatBoxProps) {
   const {
     messages,
     input,
@@ -54,10 +57,10 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
       <div className="flex h-[600px] flex-col rounded border bg-background shadow-xl">
         <div className="mt-3 h-full overflow-y-auto px-3" ref={scrollRef}>
           {messages.map((message) => (
-            <ChatMessage message={message} key={message.id} />
+            <ChatMessage user={user} message={message} key={message.id} />
           ))}
           {isLoading && lastMessageIsUser && (
-            <ChatMessage
+            <ChatMessage user={user}
               message={{
                 role: "assistant",
                 content: "Thinking...",
@@ -65,7 +68,7 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
             />
           )}
           {error && (
-            <ChatMessage
+            <ChatMessage user={user}
               message={{
                 role: "assistant",
                 content: "Something went wrong. Please try again.",
@@ -105,10 +108,15 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
 
 function ChatMessage({
   message: { role, content },
+  user
 }: {
   message: Pick<Message, "role" | "content">;
+  user: {
+    imageUrl: string
+  }
 }) {
-  const { user } = useUser();
+
+
 
   const isAiMessage = role === "assistant";
 
