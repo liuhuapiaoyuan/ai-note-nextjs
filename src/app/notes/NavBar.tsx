@@ -50,6 +50,7 @@ export default function NavBar({ user }: { user?: User }) {
         open={showAddEditNoteDialog}
         setOpen={setShowAddEditNoteDialog}
       />
+
     </>
   );
 }

@@ -1,15 +1,16 @@
-import { signIn } from "@/auth";
-import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
-
+import { AutoLogin } from "./AutoLogin";
 export const metadata: Metadata = {
   title: "FlowBrain - 登录系统",
 };
 
-export default function SignInPage() {
+export default async function SignInPage() {
+
+
   return (
     <div className="flex h-screen items-center justify-center">
-      <form
+      <AutoLogin />
+      {/* <form
         action={async () => {
           "use server"
           await signIn("casdoor", {
@@ -20,7 +21,7 @@ export default function SignInPage() {
         <Button type="submit">
           登录
         </Button>
-      </form>
+      </form> */}
     </div>
   );
 }

@@ -27,6 +27,7 @@ export const { signIn, signOut, auth, handlers } = NextAuth({
       }
     }
   ],
+
   callbacks: {
     jwt({ token, user }) {
       if (user) { // User is available during sign-in
