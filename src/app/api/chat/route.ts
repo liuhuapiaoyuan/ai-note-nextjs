@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { notesIndex } from "@/lib/db/pinecone";
 import prisma from "@/lib/db/prisma";
 import openai, { getEmbedding } from "@/lib/openai";
-import { StreamingTextResponse } from "ai";
+import { OpenAIStream, StreamingTextResponse } from "ai";
 import { ChatCompletionMessage } from "openai/resources/index.mjs";
 
 export async function POST(req: Request) {
@@ -51,14 +51,8 @@ export async function POST(req: Request) {
       messages: [systemMessage, ...messagesTruncated],
     });
 
-    // return new Response(response.toReadableStream(), {
-    //   status: 200,
-    //   headers: {
-    //     contentType: "text/event-stream",
-    //   }
-    // });
-    //const stream = OpenAIStream(response);
-    return new StreamingTextResponse(response.toReadableStream());
+    const stream = OpenAIStream(response);
+    return new StreamingTextResponse(v);
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal server error" }, { status: 500 });
