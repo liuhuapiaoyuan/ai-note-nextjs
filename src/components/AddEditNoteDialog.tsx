@@ -1,16 +1,13 @@
 import { CreateNoteSchema, createNoteSchema } from "@/lib/validation/note";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  ModalBody
+} from "@nextui-org/modal";
+import { Modal, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { Note } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "./ui/dialog";
 import {
   Form,
   FormControl,
@@ -22,7 +19,6 @@ import {
 import { Input } from "./ui/input";
 import LoadingButton from "./ui/loading-button";
 import { Textarea } from "./ui/textarea";
-
 interface AddEditNoteDialogProps {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -95,62 +91,66 @@ export default function AddEditNoteDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{noteToEdit ? "编辑笔记" : "新增笔记"}</DialogTitle>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Note title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Note title" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Note content</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Note content" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <DialogFooter className="gap-1 sm:gap-0">
-              {noteToEdit && (
+    <Modal isOpen={open} onOpenChange={setOpen}>
+      <ModalContent>
+        <ModalHeader>
+          {noteToEdit ? "编辑备忘" : "新增备忘"}
+        </ModalHeader>
+        <ModalBody>
+
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Note title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Note title" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="content"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>备忘内容</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="输入备忘内容" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <ModalFooter className="gap-1 flex">
+                {noteToEdit && (
+                  <LoadingButton
+                    variant="destructive"
+                    loading={deleteInProgress}
+                    disabled={form.formState.isSubmitting}
+                    onClick={deleteNote}
+                    type="button"
+                  >
+                    删除备忘
+                  </LoadingButton>
+                )}
                 <LoadingButton
-                  variant="destructive"
-                  loading={deleteInProgress}
-                  disabled={form.formState.isSubmitting}
-                  onClick={deleteNote}
-                  type="button"
+                  type="submit"
+                  loading={form.formState.isSubmitting}
+                  disabled={deleteInProgress}
                 >
-                  删除笔记
+                  提交
                 </LoadingButton>
-              )}
-              <LoadingButton
-                type="submit"
-                loading={form.formState.isSubmitting}
-                disabled={deleteInProgress}
-              >
-                提交
-              </LoadingButton>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+              </ModalFooter>
+            </form>
+          </Form>
+        </ModalBody>
+
+      </ModalContent>
+    </Modal>
   );
 }

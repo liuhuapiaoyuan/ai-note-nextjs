@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { NextUIProvider } from "./NextUIProvider";
 import { ThemeProvider } from "./ThemeProvider";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "FlowBrain",
@@ -19,10 +17,12 @@ export default function RootLayout({
   return (
     <>
       <html lang="en">
-        <body className={inter.className}>
+        <body  >
           <NextUIProvider>
             <ThemeProvider attribute="class">
-              {children}
+              <div className="flex flex-col h-screen">
+                {children}
+              </div>
             </ThemeProvider>
           </NextUIProvider>
         </body>

@@ -23,7 +23,7 @@ export default async function NotesPage() {
       ))}
       {allNotes.length === 0 && (
         <div className="col-span-full text-center">
-          {"You don't have any notes yet. Why don't you create one?"}
+          你还没有任何笔记。为什么不创建一个呢？
         </div>
       )}
     </div>

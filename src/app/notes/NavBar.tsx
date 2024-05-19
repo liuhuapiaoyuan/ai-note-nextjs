@@ -7,7 +7,7 @@ import ThemeToggleButton from "@/components/ThemeToggleButton";
 import { Button } from "@/components/ui/button";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, User } from "@nextui-org/react";
 
-import { LogOut, Plus } from "lucide-react";
+import { BookMinus, LogOut, MailPlus, Plus } from "lucide-react";
 import { User as AuthUser } from "next-auth";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
@@ -29,11 +29,7 @@ export default function NavBar({ user }: { user?: AuthUser }) {
           <div className="flex items-center gap-2">
             {
               user && <>
-
                 <Dropdown
-                  onClick={e => {
-
-                  }}
                   trigger="press"
                   showArrow
                   classNames={{
@@ -49,6 +45,9 @@ export default function NavBar({ user }: { user?: AuthUser }) {
                   <DropdownMenu
                     onAction={(key) => {
                       key === 'signOut' && signOut()
+                      if (key === 'addMemo') {
+                        setShowAddEditNoteDialog(true)
+                      }
                     }}
                     aria-label="Static Actions">
                     <DropdownItem
@@ -57,6 +56,21 @@ export default function NavBar({ user }: { user?: AuthUser }) {
                         name={user.name}
                         avatarProps={{ src: user.image!, size: "sm" }}
                       />
+                    </DropdownItem>
+                    <DropdownItem as={Link} href="/notes"
+                      startContent={<BookMinus size={20} />}
+                    >
+                      我的笔记
+                    </DropdownItem>
+                    <DropdownItem
+                      startContent={<Plus size={20} />}
+                      key="addMemo">
+                      新增备忘
+                    </DropdownItem>
+                    <DropdownItem as={Link} href="/notes/editor"
+                      startContent={<MailPlus size={20} />}
+                      key="addNote"  >
+                      发布笔记
                     </DropdownItem>
                     <DropdownItem
                       startContent={<LogOut size={20} />}
@@ -69,13 +83,14 @@ export default function NavBar({ user }: { user?: AuthUser }) {
             }
             <Button onClick={() => setShowAddEditNoteDialog(true)}>
               <Plus size={20} className="mr-2" />
-              新增笔记
+              快速记录
             </Button>
             <AIChatButton user={user} />
             <ThemeToggleButton />
           </div>
         </div>
       </div>
+
       <AddEditNoteDialog
         open={showAddEditNoteDialog}
         setOpen={setShowAddEditNoteDialog}

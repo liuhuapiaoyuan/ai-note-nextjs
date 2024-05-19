@@ -19,6 +19,12 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 - chatgpt [chatgpt](https://www.chatgpt.ai/)
 - vercel-ai-sdk [vercel-ai-sdk](https://vercel.com/docs/vercel-ai/overview)
 
+### 1.1
+
+- [ ] 改善笔记列表显示
+- [ ] 增加笔记类型： 备忘，文章
+- [ ] 增加笔记类型：文章编写
+
 ### 1.0
 
 - [x] next-auth集成，标准oidc集成
