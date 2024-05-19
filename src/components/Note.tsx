@@ -42,7 +42,7 @@ export default function Note({ note }: NoteProps) {
         </CardHeader>
         <CardBody className="px-3 py-0 text-small text-default-400">
           <p>
-            {note.content}
+            {note.description}
           </p>
           <div className="flex flex-wrap gap-1">
             <span>#adsas#</span>

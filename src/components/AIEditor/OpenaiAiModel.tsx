@@ -48,7 +48,7 @@ export class OpenaiAiModel {
    * 创建客户端链接 URL
    */
   createAiClientUrl() {
-    return '/api/note/ai'
+    return '/api/editor/ai'
   }
   /**
    * 创建客户端

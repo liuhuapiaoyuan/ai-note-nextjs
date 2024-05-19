@@ -1,58 +1,47 @@
 import { auth } from "@/auth";
-import { notesIndex } from "@/lib/db/pinecone";
-import prisma from "@/lib/db/prisma";
-import openai, { getEmbedding } from "@/lib/openai";
-import { OpenAIStream, StreamingTextResponse } from "ai";
+import { getLLM } from "@/lib/openai";
+import { NoteService } from "@/service/NoteService";
+import {
+  ChatPromptTemplate
+} from "@langchain/core/prompts";
+import { StreamingTextResponse } from "ai";
+import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { ChatCompletionMessage } from "openai/resources/index.mjs";
 
+
+const SYSTEM_TEMPLATE = `
+YourName: '笔记助理'
+Answer the user's questions based on the below context. 
+If the context doesn't contain any relevant information to the question, don't make something up and just say "I don't know":
+
+<context>
+{context}
+</context>
+`;
 export async function POST(req: Request) {
+  const session = await auth();
+  const userId = session?.user?.id!;
+  const body = await req.json();
+  const messages: ChatCompletionMessage[] = body.messages;
+  const messagesTruncated = messages.slice(-6);
+  const query = messagesTruncated.slice(-1)[0].content!;
   try {
-    const body = await req.json();
-    const messages: ChatCompletionMessage[] = body.messages;
-
-    const messagesTruncated = messages.slice(-6);
-
-    const embedding = await getEmbedding(
-      messagesTruncated.map((message) => message.content).join("\n"),
-    );
-
-    const session = await auth();
-    const userId = session?.user?.id!;
-    const vectorQueryResponse = await notesIndex.query({
-      vector: embedding,
-      topK: 4,
-      filter: { userId },
+    const questionAnsweringPrompt = ChatPromptTemplate.fromMessages([
+      ["system", SYSTEM_TEMPLATE],
+      ...messagesTruncated.map(z => [z.role as 'user', z.content!]),
+    ]);
+    const documents = await NoteService.queryDocuemnts(query, userId, 3)
+    const llm = getLLM()
+    const documentChain = await createStuffDocumentsChain({
+      llm,
+      prompt: questionAnsweringPrompt,
     });
 
-    const relevantNotes = await prisma.note.findMany({
-      where: {
-        id: {
-          in: vectorQueryResponse.matches.map((match) => match.id),
-        },
-      },
-    });
+    const stream = await documentChain.stream({
+      context: documents,
+    })
 
-    console.log("Relevant notes found: ", relevantNotes);
-
-    const systemMessage: ChatCompletionMessage = {
-      role: "system",
-      content:
-        "You must use language that is appropriate for the user. " +
-        "You are an intelligent note-taking app. You answer the user's question based on their existing notes. " +
-        "The relevant notes for this query are:\n" +
-        relevantNotes
-          .map((note) => `Title: ${note.title}\n\nContent:\n${note.content}`)
-          .join("\n\n"),
-    };
-
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      stream: true,
-      messages: [systemMessage, ...messagesTruncated],
-    });
-
-    const stream = OpenAIStream(response);
-    return new StreamingTextResponse(stream);
+    return new StreamingTextResponse(stream)
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal server error" }, { status: 500 });

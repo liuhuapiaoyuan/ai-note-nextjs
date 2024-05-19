@@ -1,3 +1,5 @@
+import { ChatZhipuAI } from "@langchain/community/chat_models/zhipuai";
+import { ZhipuAIEmbeddings } from "@langchain/community/embeddings/zhipuai";
 import OpenAI from "openai";
 
 const apiKey = process.env.OPENAI_API_KEY;
@@ -22,4 +24,23 @@ export async function getEmbedding(text: string) {
 
 
   return embedding;
+}
+
+
+/**
+ * 获得当前的大语言模型
+ * @returns 
+ */
+export function getLLM() {
+  return new ChatZhipuAI({
+    streaming: true,
+    model: "glm-3-turbo", // Available models:
+  });
+}
+/**
+ * 获得向量化模型
+ * @returns 
+ */
+export function getEmbeedingModel() {
+  return new ZhipuAIEmbeddings({});
 }
