@@ -24,7 +24,8 @@ function Editor(props: {
   return <>
     {/* 输入框 */}
     <form action={createNote} className="h-full flex flex-col gap-3">
-      <input type="hidden" value={note?.id} readOnly defaultValue={note?.id} />
+      <input name="id" className='hidden' value={note?.id} readOnly defaultValue={note?.id} />
+      <input name="type" className='hidden' value={note?.type} readOnly defaultValue={note?.type} />
       <div>
         <Input
           defaultValue={note?.title}

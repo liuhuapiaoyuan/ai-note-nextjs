@@ -75,6 +75,5 @@ module.exports = {
   },
   darkMode: "class",
   plugins: [
-    require('@tailwindcss/line-clamp'),
     require("tailwindcss-animate"), nextui()],
 }

@@ -7,12 +7,13 @@ import ThemeToggleButton from "@/components/ThemeToggleButton";
 import { Button } from "@/components/ui/button";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, User } from "@nextui-org/react";
 
-import { BookMinus, LogOut, MailPlus, Plus } from "lucide-react";
+import { BookMinus, File, LogOut, MailPlus, Plus } from "lucide-react";
 import { User as AuthUser } from "next-auth";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { ParserUsage } from "./ParserUsage";
 
 type NavBarProps = {
   user?: AuthUser;
@@ -71,6 +72,9 @@ export default function NavBar({ user, statistics }: NavBarProps) {
                         </div>
                       </div>
                     </DropdownItem>
+                    <DropdownItem key="parserUseage">
+                      <ParserUsage />
+                    </DropdownItem>
                     <DropdownItem
                       key="new">
                       <User
@@ -92,6 +96,11 @@ export default function NavBar({ user, statistics }: NavBarProps) {
                       startContent={<MailPlus size={20} />}
                       key="addNote"  >
                       发布笔记
+                    </DropdownItem>
+                    <DropdownItem as={Link} href="/notes/attach"
+                      startContent={<File size={20} />}
+                      key="addAttach"  >
+                      文档解读
                     </DropdownItem>
                     <DropdownItem
                       startContent={<LogOut size={20} />}

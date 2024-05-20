@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { getLLM } from "@/lib/openai";
-import { NoteService } from "@/service/NoteService";
+import { noteService } from "@/service/NoteService";
 import {
   ChatPromptTemplate
 } from "@langchain/core/prompts";
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       // @ts-ignore
       ...messagesTruncated.map(z => [z.role as 'user', z.content!]),
     ]);
-    const documents = await NoteService.queryDocuemnts(query, userId, 3)
+    const documents = await noteService.queryDocuemnts(query, userId, 3)
     const llm = getLLM()
     const documentChain = await createStuffDocumentsChain({
       llm,

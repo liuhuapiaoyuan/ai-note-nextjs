@@ -5,7 +5,7 @@ import {
   deleteNoteSchema,
   updateNoteSchema,
 } from "@/lib/validation/note";
-import { NoteService } from "@/service/NoteService";
+import { noteService } from "@/service/NoteService";
 
 export async function POST(req: Request) {
   try {
@@ -37,8 +37,8 @@ export async function POST(req: Request) {
       return note;
     });
     // 总结
-    NoteService.generateTagAndDescription(note)
-    NoteService.createIndex(note)
+    noteService.generateTagAndDescription(note)
+    noteService.createIndex(note)
 
     return Response.json({ note }, { status: 201 });
   } catch (error) {
@@ -83,9 +83,9 @@ export async function PUT(req: Request) {
       });
       return updatedNote;
     });
-    NoteService.generateTagAndDescription(note)
+    noteService.generateTagAndDescription(note)
 
-    NoteService.createIndex(updatedNote)
+    noteService.createIndex(updatedNote)
 
     return Response.json({ updatedNote }, { status: 200 });
   } catch (error) {
@@ -118,7 +118,7 @@ export async function DELETE(req: Request) {
       return Response.json({ error: "Note not found" }, { status: 404 });
     }
     await prisma.$transaction(async (tx) => {
-      await NoteService.cleanIndex(note);
+      await noteService.cleanIndex(note);
       await tx.note.delete({ where: { id } });
     });
 

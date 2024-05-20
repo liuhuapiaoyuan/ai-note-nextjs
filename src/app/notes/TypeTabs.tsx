@@ -16,5 +16,6 @@ export function TypeTabs() {
     aria-label="Options" selectedKey={type}>
     <Tab key="0" href="/notes?type=0" title="备忘" />
     <Tab key="1" href="/notes?type=1" title="笔记" />
-  </Tabs>;
+    <Tab key="3" href="/notes?type=3" title="文档" />
+  </Tabs>
 }

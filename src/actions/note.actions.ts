@@ -2,7 +2,8 @@
 
 import { auth } from "@/auth";
 import prisma from "@/lib/db/prisma";
-import { NoteService } from "@/service/NoteService";
+import { attachParseJobService } from "@/service/AttachParseJob";
+import { noteService } from "@/service/NoteService";
 import { redirect } from "next/navigation";
 /**
  * 创建笔记
@@ -23,11 +24,11 @@ export async function createNote(formData: FormData) {
     title: title!,
     content,
     userId,
-    type: 1,
+
   };
   if (!note) {
     note = await prisma.note.create({
-      data: noteData
+      data: { ...noteData, type: 1 }
     })
   } else {
     note = await prisma.note.update({
@@ -36,8 +37,8 @@ export async function createNote(formData: FormData) {
     })
   }
 
-  NoteService.generateTagAndDescription(note)
-  NoteService.createIndex(note)
+  noteService.generateTagAndDescription(note)
+  noteService.createIndex(note)
 
   // 成功就返回
   redirect("/notes?type=1")
@@ -70,7 +71,7 @@ export async function remoteNote(noteId: string) {
 
     }
     await prisma.$transaction(async (tx) => {
-      await NoteService.cleanIndex(note);
+      await noteService.cleanIndex(note);
       await tx.note.delete({ where: { id } });
     });
     return { message: "Note deleted", status: 200 }
@@ -90,6 +91,13 @@ export async function statistics() {
   if (!userId) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const embeddingStatusStatistics = await NoteService.statistics(userId)
+  const embeddingStatusStatistics = await noteService.statistics(userId)
   return { embeddingStatusStatistics }
 }
+
+
+export const getLLamaParseUsage = async () => {
+  return attachParseJobService.useage();
+};
+
+

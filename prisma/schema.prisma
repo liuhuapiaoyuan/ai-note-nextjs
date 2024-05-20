@@ -11,17 +11,35 @@ datasource db {
 }
 
 model Note {
-  id              String   @id @default(uuid())
-  title           String
-  content         String?
-  userId          String
-  chunkIds        String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  embeedingStatus Int      @default(0) // 状态： 0 - 未处理， 1 - 处理中，2 - 已处理 3 - 处理失败
-  tags            String?
-  description     String?
-  type            Int      @default(0) // 类型 0-备忘，1-笔记，2-图片
+  id               String          @id @default(uuid())
+  title            String
+  attachParseJob   AttachParseJob? @relation(fields: [attachParseJobId], references: [id])
+  content          String?
+  userId           String
+  chunkIds         String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  embeedingStatus  Int             @default(0) // 状态： 0 - 未处理， 1 - 处理中，2 - 已处理 3 - 处理失败
+  tags             String?
+  description      String?
+  type             Int             @default(0) // 类型 0-备忘，1-笔记，2-图片 , 3-附件
+  attachParseJobId String?
 
   @@map("notes")
+}
+
+model AttachParseJob {
+  id        String   @id @default(uuid())
+  userId    String
+  jobId     String? // 绑定后关联到Note
+  status    Int      @default(0) // 状态： 0 - 处理中，1 - 成功 2- 已取消 3 - 处理失败
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  result    String?
+  format    String?
+  fileName  String?
+  mediaType String // 媒体类型
+  Note      Note[]
+
+  @@map("attach_parse_jobs")
 }

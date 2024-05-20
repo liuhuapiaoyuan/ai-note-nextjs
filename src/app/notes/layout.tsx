@@ -1,11 +1,11 @@
 import { auth } from "@/auth";
-import { NoteService } from "@/service/NoteService";
+import { noteService } from "@/service/NoteService";
 import NavBar from "./NavBar";
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const session = await auth()
 
-  const statstics = await NoteService.statistics(session?.user?.id!)
+  const statstics = await noteService.statistics(session?.user?.id!)
 
   return (
     <>

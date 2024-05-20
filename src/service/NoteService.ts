@@ -2,6 +2,7 @@
 
 import { notesStore } from '@/lib/db/pinecone';
 import prisma from '@/lib/db/prisma';
+import { Task, taskExecutor } from '@/lib/job/AsyncTaskExecutor';
 import { getLLM } from '@/lib/openai';
 import { isBlank } from '@/lib/utils';
 import { Note } from '@prisma/client';
@@ -10,7 +11,20 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { DEFAULT_PROMPT } from './prompts';
 
 
-export const NoteService = {
+export const noteService = {
+  /**
+   * 创建note并建立索引
+   * @param note 
+   */
+  async crateNote(data: Pick<Note, "type" | "userId" | "attachParseJobId" | "title" | "content">) {
+    const note = await prisma.note.create({
+      data
+    })
+    // 生成描述文本
+    taskExecutor.addTask(new Task(() => noteService.generateTagAndDescription(note)))
+    // 创建索引
+    taskExecutor.addTask(new Task(() => noteService.createIndex(note)))
+  },
 
 
   // 开始训练某个文章
