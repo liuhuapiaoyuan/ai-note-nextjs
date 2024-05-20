@@ -17,7 +17,13 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 - authing [authing](https://www.authing.cn/) ,casdoor
 - pinecone [pinecone](https://www.pinecone.io/)
 - chatgpt [chatgpt](https://www.chatgpt.ai/)
+- langchain
 - vercel-ai-sdk [vercel-ai-sdk](https://vercel.com/docs/vercel-ai/overview)
+
+### 页面预览
+
+![alt text](doc/website.png)
+![alt text](doc/notes.png)
 
 ### 1.1
 
