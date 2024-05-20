@@ -12,6 +12,7 @@ export type RichEditorProps = {
   className?: string
   style?: React.CSSProperties
   value?: string
+  defaultValue?: string
   onChange?: (value: string, aiEditor: AiEditor) => void
 } & Omit<AiEditorOptions, 'element' | 'ai' | 'onChange'>
 
@@ -69,7 +70,7 @@ const AIActions: any[] = [
  * @returns
  */
 function RichEditor(props: React.PropsWithRef<RichEditorProps>) {
-  const { className, style, onChange, value } = props
+  const { className, defaultValue, style, onChange, value } = props
   //定义 ref
   const divRef = useRef<HTMLDivElement>(null)
   const aiRef = useRef<AiEditor>()
@@ -84,16 +85,13 @@ function RichEditor(props: React.PropsWithRef<RichEditorProps>) {
       }
       const aiEditor = new AiEditor({
         element: divRef.current,
+
         placeholder: '点击输入内容/通过AI生成内容...',
         onChange(editor) {
           const text = editor.getText()
           const length = text.length
           setCharCount(length)
-        },
-        onSave(editor) {
-          const text = editor.getText()
           onChange?.(text, aiEditor)
-          return true
         },
         ai: {
           bubblePanelModel: 'openai',
@@ -109,6 +107,9 @@ function RichEditor(props: React.PropsWithRef<RichEditorProps>) {
         },
       })
       aiRef.current = aiEditor
+      if (defaultValue) {
+        aiRef.current.setContent(defaultValue)
+      }
 
       return () => {
         aiEditor.destroy()
@@ -138,6 +139,7 @@ function RichEditor(props: React.PropsWithRef<RichEditorProps>) {
       className={twMerge('h-[600px]', className)}
       style={style}
     >
+      <div>{defaultValue}</div>
       <div className='aie-container !bg-transparent !border-none flex flex-col overflow-hidden'>
         <div className='aie-container-header' />
         <div className='aie-container-main flex-1 bg-white h-1 overflow-y-auto' />

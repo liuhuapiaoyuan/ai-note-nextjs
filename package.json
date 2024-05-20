@@ -8,6 +8,7 @@
     "start": "next start",
     "prisma:init": "prisma generate",
     "db:push": "prisma db push",
+    "db:studio": "prisma  studio",
     "lint": "next lint"
   },
   "dependencies": {
@@ -45,6 +46,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@types/node": "^20",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
