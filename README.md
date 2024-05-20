@@ -21,9 +21,18 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 
 ### 1.1
 
-- [ ] 改善笔记列表显示
-- [ ] 增加笔记类型： 备忘，文章
-- [ ] 增加笔记类型：文章编写
+##### 版本改用清华智普，注意向量数据库的维度要改成1024 , 注册地址：` https://open.bigmodel.cn`
+
+- [x] 改善笔记列表显示
+- [x] 增加笔记类型： 备忘，文章
+- [x] 增加笔记类型：文章编写（AI编辑器长文本编辑器）
+- [x] 增强文档训练，引入langchain，进行text split chunk , 并训练文档
+- [x] 增加笔记状态，通过异步任务训练
+- [x] 页面动态训练任务状态
+- [x] 增加新的‘网站首页’
+- [ ] 文档对话显示引用的文章段落
+- [ ] 文档对话优化回调响应
+- [ ] 训练任务，通过redis异步训练文档，并更新状态
 
 ### 1.0
 
@@ -35,8 +44,6 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 - [ ] 改善笔记录入体验，改为新开页面，markdown编辑器，可视化查看
 - [ ] 增加笔记标签字段，并增加AI推荐标签
 - [ ] 增加笔记分类，并增加分类功能
-- [ ] 增加笔记状态，通过redis异步训练文档，并更新状态
-- [ ] 增强文档训练，引入langchain，进行text split chunk , 并训练文档
 
 ### 使用Docker进行编译和发布
 
