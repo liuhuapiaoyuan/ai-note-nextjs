@@ -44,7 +44,10 @@ export default function NavBar({ user }: { user?: AuthUser }) {
                   </DropdownTrigger>
                   <DropdownMenu
                     onAction={(key) => {
-                      key === 'signOut' && signOut()
+                      key === 'signOut' && signOut({
+                        redirect: true,
+                        callbackUrl: "/"
+                      })
                       if (key === 'addMemo') {
                         setShowAddEditNoteDialog(true)
                       }

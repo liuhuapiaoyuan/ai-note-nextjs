@@ -71,7 +71,7 @@ export default function AIChatBox({ open, onClose, user }: AIChatBoxProps) {
   return (
     <div
       className={cn(
-        "bottom-0 m-2 right-0 z-10 w-full max-w-[500px] p-1 xl:right-36  rounded-lg overflow-hidden border bg-background shadow-xl",
+        "bottom-0 m-2 z-[999] right-0  w-full max-w-[500px] p-1 xl:right-36  rounded-lg overflow-hidden border bg-background shadow-xl",
         open ? "fixed" : "hidden",
       )}
     >

@@ -7,7 +7,7 @@ export const metadata = {
 
 
 function NoteEditorPage() {
-  return <div className="h-full w-full flex flex-col gap-3 ">
+  return <div className="h-full w-full  ">
     <Editor />
   </div>
 }

@@ -5,15 +5,15 @@ import type { Editor } from '@tiptap/core'
 import { useMount } from 'ahooks'
 import { AiEditor, AiEditorOptions } from 'aieditor'
 import 'aieditor/dist/style.css'
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { OpenaiAiModel } from './OpenaiAiModel'
 
 export type RichEditorProps = {
   className?: string
   style?: React.CSSProperties
   value?: string
-  onChange?: (value: string) => void
-} & Omit<AiEditorOptions, 'element' | 'ai'>
+  onChange?: (value: string, aiEditor: AiEditor) => void
+} & Omit<AiEditorOptions, 'element' | 'ai' | 'onChange'>
 
 const preventKeyboard = function (this: HTMLDivElement, event: Event): void {
   // 阻止按键默认行为
@@ -89,7 +89,11 @@ function RichEditor(props: React.PropsWithRef<RichEditorProps>) {
           const text = editor.getText()
           const length = text.length
           setCharCount(length)
-          onChange?.(text)
+        },
+        onSave(editor) {
+          const text = editor.getText()
+          onChange?.(text, aiEditor)
+          return true
         },
         ai: {
           bubblePanelModel: 'openai',
@@ -146,6 +150,5 @@ function RichEditor(props: React.PropsWithRef<RichEditorProps>) {
   )
 }
 
-export { RichEditor as Editor }
 
-export default RichEditor
+export default memo(RichEditor)
