@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "img.clerk.com",
       },
+      {
+        hostname: "cdn.casbin.org",
+      },
     ],
   },
 };

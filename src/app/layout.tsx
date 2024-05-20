@@ -1,10 +1,8 @@
-import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { NextUIProvider } from "./NextUIProvider";
 import { ThemeProvider } from "./ThemeProvider";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "FlowBrain",
@@ -17,12 +15,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <>
       <html lang="en">
-        <body className={inter.className}>
-          <ThemeProvider attribute="class">{children}</ThemeProvider>
+        <body  >
+          <NextUIProvider>
+            <ThemeProvider attribute="class">
+              <div className="flex flex-col h-screen">
+                {children}
+              </div>
+            </ThemeProvider>
+          </NextUIProvider>
         </body>
       </html>
-    </ClerkProvider>
+    </>
   );
 }

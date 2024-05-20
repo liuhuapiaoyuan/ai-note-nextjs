@@ -1,10 +1,12 @@
+import { auth } from "@/auth";
 import NavBar from "./NavBar";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  const session = await auth()
   return (
     <>
-      <NavBar />
-      <main className="m-auto max-w-7xl p-4">{children}</main>
+      <NavBar user={session?.user} />
+      <main className="flex-1 w-full md:max-w-7xl md:m-auto p-4">{children}</main>
     </>
   );
 }
