@@ -8,6 +8,8 @@
     "start": "next start",
     "prisma:init": "prisma generate",
     "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:status": "prisma migrate status",
     "db:studio": "prisma  studio",
     "lint": "next lint"
   },
