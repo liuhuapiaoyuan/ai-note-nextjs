@@ -14,10 +14,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function NavBar({ user }: { user?: AuthUser }) {
+type NavBarProps = {
+  user?: AuthUser;
+  statistics: Record<string, number>
+};
+
+export default function NavBar({ user, statistics }: NavBarProps) {
 
   const [showAddEditNoteDialog, setShowAddEditNoteDialog] = useState(false);
-
+  const total = Object.values(statistics).reduce((a, b) => a + b, 0);
+  const trainning = statistics['1']
   return (
     <>
       <div className="p-4 shadow">
@@ -53,6 +59,18 @@ export default function NavBar({ user }: { user?: AuthUser }) {
                       }
                     }}
                     aria-label="Static Actions">
+                    <DropdownItem key="statistics">
+                      <div className="flex gap-1">
+                        <div className="bg-yellow-500 text-white flex items-center justify-center rounded-sm flex-col p-2 flex-1">
+                          <div>训练中</div>
+                          <div className="text-xl">{trainning ?? 0}</div>
+                        </div>
+                        <div className="bg-red-500 text-white flex items-center justify-center rounded-sm flex-col p-2 flex-1">
+                          <div>全部</div>
+                          <div className="text-xl">{total ?? 0}</div>
+                        </div>
+                      </div>
+                    </DropdownItem>
                     <DropdownItem
                       key="new">
                       <User

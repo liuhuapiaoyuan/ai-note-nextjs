@@ -79,3 +79,17 @@ export async function remoteNote(noteId: string) {
   }
 
 }
+
+
+/**
+ * 数据统计
+ */
+export async function statistics() {
+  const session = await auth();
+  const userId = session?.user?.id!;
+  if (!userId) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const embeddingStatusStatistics = await NoteService.statistics(userId)
+  return { embeddingStatusStatistics }
+}

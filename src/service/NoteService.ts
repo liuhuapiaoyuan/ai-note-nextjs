@@ -119,6 +119,25 @@ export const NoteService = {
         description: description?.text
       }
     })
+  },
+  async statistics(userId: string) {
+    return prisma.note.groupBy({
+      by: ['embeedingStatus'],
+      _count: {
+        id: true
+      },
+      where: {
+        userId
+      }
+    }
+
+    ).then(res => {
+      return res.reduce((pre, cur) => {
+        pre[cur.embeedingStatus] = cur._count.id
+        return pre
+      }, {} as Record<string, number>)
+    })
   }
+
 
 }
