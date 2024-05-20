@@ -34,6 +34,7 @@ export async function getEmbedding(text: string) {
 export function getLLM() {
   return new ChatZhipuAI({
     streaming: true,
+    verbose: true,
     model: "glm-3-turbo", // Available models:
   });
 }

@@ -1,15 +1,9 @@
 import Hero from '@/assets/hero.png';
 import logo from "@/assets/logo.png";
-import { auth } from "@/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const session = await auth()
-
-  if (session?.user) redirect("/notes");
-
   return (
     <main className="leading-normal tracking-normal text-white gradient" >
       <nav className=" w-full z-30 top-0 text-white">
@@ -30,12 +24,7 @@ export default async function Home() {
           </div>
           <div className="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
             <ul className="list-reset lg:flex justify-end flex-1 items-center">
-              <li className="mr-3">
-                <a className="inline-block py-2 px-4 text-black font-bold no-underline" href="#">活动</a>
-              </li>
-              <li className="mr-3">
-                <a className="inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="#">仓库</a>
-              </li>
+
             </ul>
             <Link href="/notes">
               <button
@@ -44,6 +33,7 @@ export default async function Home() {
               >
                 开始使用
               </button></Link>
+
           </div>
         </div>
         <hr className="border-b border-gray-100 opacity-25 my-0 py-0" />

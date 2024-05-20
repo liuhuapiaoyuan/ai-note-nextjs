@@ -13,7 +13,6 @@ const SYSTEM_TEMPLATE = `
 YourName: '笔记助理'
 Answer the user's questions based on the below context. 
 If the context doesn't contain any relevant information to the question, don't make something up and just say "I don't know":
-
 <context>
 {context}
 </context>
@@ -28,6 +27,7 @@ export async function POST(req: Request) {
   try {
     const questionAnsweringPrompt = ChatPromptTemplate.fromMessages([
       ["system", SYSTEM_TEMPLATE],
+      // @ts-ignore
       ...messagesTruncated.map(z => [z.role as 'user', z.content!]),
     ]);
     const documents = await NoteService.queryDocuemnts(query, userId, 3)

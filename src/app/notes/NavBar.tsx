@@ -22,7 +22,7 @@ export default function NavBar({ user }: { user?: AuthUser }) {
     <>
       <div className="p-4 shadow">
         <div className="m-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
-          <Link href="/notes" className="flex items-center gap-1">
+          <Link href="/" className="flex items-center gap-1">
             <Image src={logo} alt="FlowBrain logo" width={40} height={40} />
             <span className="font-bold">FlowBrain</span>
           </Link>
