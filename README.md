@@ -38,7 +38,9 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 - [x] 增加新的‘网站首页’
 - [ ] 文档对话显示引用的文章段落
 - [ ] 文档对话优化回调响应
-- [ ] 训练任务，通过redis异步训练文档，并更新状态
+- [x] 训练任务，异步话改造，引入可控的基于内存的异步任务管理
+- [x] 新增附件文档训练，对接llamaparse云服务，需要配置key
+- [x] 可以查看可用的文档驯良数量
 
 ### 1.0
 
