@@ -1,5 +1,6 @@
-import { ChatZhipuAI } from "@langchain/community/chat_models/zhipuai";
+import { ChatBaiduWenxin } from "@langchain/community/chat_models/baiduwenxin";
 import { ZhipuAIEmbeddings } from "@langchain/community/embeddings/zhipuai";
+import { ChatOpenAI } from "@langchain/openai";
 import OpenAI from "openai";
 
 const apiKey = process.env.OPENAI_API_KEY;
@@ -32,10 +33,13 @@ export async function getEmbedding(text: string) {
  * @returns 
  */
 export function getLLM() {
-  return new ChatZhipuAI({
-    streaming: true,
-    verbose: true,
-    model: "glm-3-turbo", // Available models:
+  return new ChatOpenAI({
+    model: "gpt-3.5-turbo-16k", // Available models:
+  });
+}
+export function getBaiduWenxin() {
+  return new ChatBaiduWenxin({
+    model: "ERNIE-Speed-128K",
   });
 }
 /**

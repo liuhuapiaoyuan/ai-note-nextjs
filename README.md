@@ -40,7 +40,7 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 - [ ] 文档对话优化回调响应
 - [x] 训练任务，异步话改造，引入可控的基于内存的异步任务管理
 - [x] 新增附件文档训练，对接llamaparse云服务，需要配置key
-- [x] 可以查看可用的文档驯良数量
+- [x] 可以查看可用的文档训练数
 
 ### 1.0
 

@@ -23,10 +23,12 @@ export default function AIChatBox({ open, onClose, user }: AIChatBoxProps) {
     handleInputChange,
     handleSubmit,
     setMessages,
-
     isLoading,
     error,
-  } = useChat();
+  } = useChat({
+
+    streamMode: "text"
+  });
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
