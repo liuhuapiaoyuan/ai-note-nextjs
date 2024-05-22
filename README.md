@@ -24,8 +24,21 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 
 ![alt text](doc/website.png)
 ![alt text](doc/notes.png)
+![alt text](doc/app.png)![alt text](doc/editor.png)
 
-### 1.1
+### 1.1.1
+
+#### 页面编排改造
+
+- [x] 改善页面布局，优化交互逻辑
+- [x] 优化对话，统一LLM配置，统一编辑器/管家对话逻辑
+- [x] 修复管家的消息记录错误
+- [ ] 文档对话显示引用的文章段落
+- [ ] 文档对话优化回调响应
+- [ ] 增加网页爬虫访问
+- [ ] 增加Github收藏仓库授权同步
+
+### 1.1.0
 
 ##### 版本改用清华智普，注意向量数据库的维度要改成1024 , 注册地址：` https://open.bigmodel.cn`
 
@@ -36,13 +49,12 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 - [x] 增加笔记状态，通过异步任务训练
 - [x] 页面动态训练任务状态
 - [x] 增加新的‘网站首页’
-- [ ] 文档对话显示引用的文章段落
-- [ ] 文档对话优化回调响应
+
 - [x] 训练任务，异步话改造，引入可控的基于内存的异步任务管理
 - [x] 新增附件文档训练，对接llamaparse云服务，需要配置key
 - [x] 可以查看可用的文档训练数
 
-### 1.0
+### 1.0.0
 
 - [x] next-auth集成，标准oidc集成
 - [x] next-ui集成
