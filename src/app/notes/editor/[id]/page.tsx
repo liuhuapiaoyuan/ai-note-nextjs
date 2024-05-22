@@ -20,11 +20,11 @@ async function NoteEditorEditPage({ params: { id } }: any) {
   })
 
 
-  return <div className="h-full w-full  ">
+  return <>
     {
       note?.id ? (<Editor
         note={note}
-      />) : <div className="h-full flex items-center">
+      />) : <div className="h-full  w-full  flex items-center">
         <div className="text-center">
           <Link href="/notes">
             没有相关文档</Link>
@@ -33,7 +33,7 @@ async function NoteEditorEditPage({ params: { id } }: any) {
     }
 
 
-  </div>
+  </>
 }
 
 export default NoteEditorEditPage

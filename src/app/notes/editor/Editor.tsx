@@ -25,13 +25,13 @@ function Editor(props: {
     {/* 输入框 */}
     <form action={createNote} className="h-full flex flex-col gap-3">
       <input name="id" className='hidden' value={note?.id} readOnly defaultValue={note?.id} />
-      <input name="type" className='hidden' value={note?.type} readOnly defaultValue={note?.type} />
+      <input name="type" className='hidden' readOnly defaultValue={note?.type} />
       <div>
         <Input
           defaultValue={note?.title}
           name="title" autoFocus variant="underlined" placeholder="文章标题" />
       </div>
-      <div className="flex-1 w-full">
+      <div className="flex-1 h-1 w-full">
         <AIEditor
           value={note?.content ?? ""}
           onChange={onChange}

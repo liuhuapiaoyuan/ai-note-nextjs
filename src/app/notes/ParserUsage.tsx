@@ -9,7 +9,6 @@ import { useRequest } from "ahooks";
 export function ParserUsage() {
   const useage = useRequest(getLLamaParseUsage, {
     manual: false,
-    pollingInterval: 500,
 
   })
   const maxPages = useage.data?.max_pdf_pages
