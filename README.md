@@ -33,6 +33,8 @@ Learn how to build this app in my tutorial: https://www.youtube.com/watch?v=mkJb
 - [x] 改善页面布局，优化交互逻辑
 - [x] 优化对话，统一LLM配置，统一编辑器/管家对话逻辑
 - [x] 修复管家的消息记录错误
+- [ ] 显示训练中的训练状态
+- [ ] 数据大盘，统计数量
 - [ ] 文档对话显示引用的文章段落
 - [ ] 文档对话优化回调响应
 - [ ] 增加网页爬虫访问
