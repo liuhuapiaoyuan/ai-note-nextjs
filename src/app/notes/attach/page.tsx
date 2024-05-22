@@ -26,8 +26,10 @@ export default function AttachPage() {
             name="file" type="file"
             accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.presentationml.presentation"
           />
-          <div className="text-sm text-red-500">
-            支持附件： ppt/excel/word/pdf/txt等个是
+          <div className="text-sm text-gray-500">
+            <p>文档格式：支持 PDF（含扫描件）/ Word / 图片 / HTML / Markdown / EPUB / Mobi</p>
+            <p>文档大小：文件最大支持100M，图片最大支持20M</p>
+            <p>文档页数：PDF/Word最多支持1000页         </p>
           </div>
         </div>
       </label>

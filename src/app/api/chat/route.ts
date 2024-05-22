@@ -10,7 +10,7 @@ import { ChatCompletionMessage } from "openai/resources/index.mjs";
 
 
 const SYSTEM_TEMPLATE = `
-YourName: '笔记助理'
+YourName: '知识管家'
 YourJob:
 1. Answer the user's questions based on the below context. 
 2. If the context doesn't contain any relevant information to the question.

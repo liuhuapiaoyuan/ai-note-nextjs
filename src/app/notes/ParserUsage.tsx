@@ -8,15 +8,18 @@ import { useRequest } from "ahooks";
 // 定时轮训获得
 export function ParserUsage() {
   const useage = useRequest(getLLamaParseUsage, {
-    manual: false
+    manual: false,
+    pollingInterval: 500,
+
   })
   const maxPages = useage.data?.max_pdf_pages
-  return <div>
+  const firstLoading = (!useage.data) && useage.loading
+  return <div className="text-sm">
     <div>文档解析用量</div>
     <div>
       <Progress
         size="sm"
-        isIndeterminate={useage.loading}
+        isIndeterminate={firstLoading}
         radius="sm"
         classNames={{
           base: "w-full",
